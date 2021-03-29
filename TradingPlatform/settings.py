@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'qi6q(38wvg%a)t6j9c-y+gy8*&gn_l+*62r=y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'api',
     'rest_framework',
     'rest_framework_simplejwt',
+    'django_celery_beat',
+    'django_celery_results',
 
 ]
 
@@ -87,7 +89,7 @@ DATABASES = {
          'HOST': os.environ.get('POSTGRES_HOST', default='localhost'),
          'USER': os.environ.get('POSTGRES_USER', default='postgres'),
          'PASSWORD': os.environ.get('POSTGRES_PASSWORD', default='postgres'),
-         'PORT': os.environ.get('POSTGRES_PASSWORD', default='5432'),
+         'PORT': os.environ.get('POSTGRES_PORT', default='5432'),
     }
 }
 
@@ -142,3 +144,7 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=12),
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=20),
 }
+
+CELERY_TIMEZONE = "Europe/Moscow"
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://localhost:6379')
+CELERY_RESULT_BACKEND = 'django-db'
