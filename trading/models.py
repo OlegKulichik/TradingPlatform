@@ -76,7 +76,7 @@ class Inventory(models.Model):
     quantity = models.IntegerField("Stocks quantity", default=0)
 
     def __str__(self):
-        return f"{self.profile}, {self.item}"
+        return f"{self.profile}, {self.item}, {self.quantity}"
 
 
 class Offer(models.Model):
