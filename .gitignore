@@ -127,6 +127,7 @@ dmypy.json
 Pipfile.lock
 .idea/
 !.env
+postgres_data
 
 # Pyre type checker
 .pyre/
