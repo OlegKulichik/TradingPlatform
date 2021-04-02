@@ -11,8 +11,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "8000:8000"
+    command: gunicorn TradingPlatform.wsgi:application --bind 0.0.0.0:8000
+    expose:
+      - 8000
     depends_on:
       - db
       - redis
@@ -20,6 +21,7 @@ services:
       - .env
     volumes:
       - ./:/usr/src/app/
+      - static_volume:/usr/src/app/static
   redis:
     image: redis:alpine
   celery:
@@ -34,3 +36,15 @@ services:
       - web
     volumes:
       - ./:/usr/src/app/
+  nginx:
+    build: ./nginx
+    ports:
+      - 1337:80
+    depends_on:
+      - web
+    volumes:
+      - static_volume:/usr/src/app/static
+
+
+volumes:
+  static_volume:

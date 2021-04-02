@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'TradingPlatform.wsgi.application'
 DATABASES = {
      'default': {
          'ENGINE': 'django.db.backends.postgresql_psycopg2',
-         'NAME': os.environ.get('POSTGRES_DB', default='trade_db'),
+         'NAME': os.environ.get('POSTGRES_DB', default='test_db'),
          'HOST': os.environ.get('POSTGRES_HOST', default='localhost'),
          'USER': os.environ.get('POSTGRES_USER', default='postgres'),
          'PASSWORD': os.environ.get('POSTGRES_PASSWORD', default='postgres'),
@@ -130,7 +130,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 REST_FRAMEWORK = {
