@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -85,7 +86,7 @@ WSGI_APPLICATION = 'TradingPlatform.wsgi.application'
 DATABASES = {
      'default': {
          'ENGINE': 'django.db.backends.postgresql_psycopg2',
-         'NAME': os.environ.get('POSTGRES_DB', default='test_db'),
+         'NAME': os.environ.get('POSTGRES_DB', default='trade_db'),
          'HOST': os.environ.get('POSTGRES_HOST', default='localhost'),
          'USER': os.environ.get('POSTGRES_USER', default='postgres'),
          'PASSWORD': os.environ.get('POSTGRES_PASSWORD', default='postgres'),

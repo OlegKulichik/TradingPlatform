@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from api.tasks import item_app_date
 from trading.models import (
     Currency,
     Item,
@@ -38,7 +39,25 @@ class CurrencyViewSet(viewsets.ModelViewSet):
 class ItemViewSet(viewsets.ModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (IsAuthenticatedOrReadOnly, )
+
+    @action(methods=('post', ), detail=False, url_path='post-item-v1')
+    def post_items(self, request, *args, **kwargs):
+        item = Item.objects.filter(pk__in=request.data['id'])
+        serializer = ItemSerializer(item, data=request.data)
+        serializer.update(item, request.data)
+        return Response(status=status.HTTP_200_OK)
+
+    @action(methods=('post', ), detail=False, url_path='post-item-v2')
+    def post_item(self, request, *args, **kwargs):
+        Item.objects.filter(pk__in=request.data['id']).update(price=request.data['price'])
+        return Response(status=status.HTTP_200_OK)
+
+    @action(methods=('post', ), detail=False, url_path='post-item-v3')
+    def post_item(self, request, *args, **kwargs):
+        item = request.data
+        item_app_date.apply_async([item])
+        return Response(status=status.HTTP_200_OK)
 
 
 class WatchListViewSet(viewsets.ModelViewSet):

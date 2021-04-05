@@ -129,5 +129,6 @@ Pipfile.lock
 .idea/
 !.env
 postgres_data/
+static/
 # Pyre type checker
 .pyre/

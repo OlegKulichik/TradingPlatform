@@ -17,6 +17,13 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 class ItemSerializer(serializers.ModelSerializer):
+    def update(self, instance, validated_data):
+        to_update = []
+        for item in instance:
+            item.price = validated_data['price']
+            to_update.append(item)
+        Item.objects.bulk_update(to_update, fields=('price', ))
+        return instance
 
     class Meta:
         model = Item

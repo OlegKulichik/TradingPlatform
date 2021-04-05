@@ -1,5 +1,5 @@
 from celery import shared_task
-from trading.models import Offer
+from trading.models import Offer, Item
 from api.services import pass_offer, trade_create
 
 
@@ -14,3 +14,8 @@ def search_offers():
                 continue
             else:
                 trade_create(buyer_offer, seller_offer)
+
+
+@shared_task
+def item_app_date(item):
+    Item.objects.filter(pk__in=item['id']).update(price=item['price'])
